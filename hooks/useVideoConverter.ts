@@ -14,7 +14,7 @@ export function useVideoConverter({
   async function handleConvert() {
     try {
       setLoading(true);
-      const selectedVideos = videos.filter((v) => v.selected);
+      const selectedVideos = videos.filter((v) => v.selected && !v.downloadUrl);
 
       if (selectedVideos.length === 0) {
         alert("Please select at least one file");
@@ -112,11 +112,11 @@ export function useVideoConverter({
   }
 
   function handleDownloadSelected() {
-    const selectedCompletedVideos = videos.filter(
-      (video) => video.selected && video.downloadUrl,
+    const selectedVideos = videos.filter(
+      (video) => video.selected && video.convertedBlob,
     );
-
-    selectedCompletedVideos.forEach((video) => {
+    
+    selectedVideos.forEach((video) => {
       const link = document.createElement("a");
       link.href = video.downloadUrl!;
       const fileName = video.file.name.replace(

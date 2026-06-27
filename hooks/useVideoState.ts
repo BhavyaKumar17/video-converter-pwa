@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { VideoItem } from "@/types";
+import { logToTerminal } from "@/app/actions";
 
 export function useVideoState() {
   const [videos, setVideos] = useState<VideoItem[]>([]);

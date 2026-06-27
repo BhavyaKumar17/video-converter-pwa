@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { VCFileTableProps, VideoItem } from "@/types";
 import { ProgressBar } from "./ProgressBar";
@@ -10,6 +12,7 @@ import {
   LoaderCircle,
   CircleX,
 } from "lucide-react";
+import { DownloadLink } from "./DownloadLink";
 
 export const FileTable = ({
   videos,
@@ -178,16 +181,25 @@ export const FileTable = ({
               "
             >
               {video.downloadUrl ? (
-                <a
-                  href={video.downloadUrl}
-                  download={video.file.name.replace(
+                <DownloadLink
+                  url={video.downloadUrl}
+                  fileName={video.file.name.replace(
                     new RegExp(`\\.${fromFormat}$`, "i"),
                     `.${toFormat}`,
                   )}
                 >
-                  <Download size={20} color="#d5c039" strokeWidth={3} />
-                </a>
+                  <Download size={20} />
+                </DownloadLink>
               ) : (
+                // <a
+                //   href={video.downloadUrl}
+                //   download={video.file.name.replace(
+                //     new RegExp(`\\.${fromFormat}$`, "i"),
+                //     `.${toFormat}`,
+                //   )}
+                // >
+                //   <Download size={20} color="#d5c039" strokeWidth={3} />
+                // </a>
                 "-"
               )}
             </td>

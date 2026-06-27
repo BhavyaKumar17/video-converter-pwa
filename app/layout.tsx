@@ -24,6 +24,7 @@ export const metadata: Metadata = {
     "mkv to mp4",
     "webm to mp4",
   ],
+  manifest: "/manifest.webmanifest",
 };
 
 export default function RootLayout({

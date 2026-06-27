@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   CHOOSE_SOURCE,
   CHOOSE_TARGET,
@@ -22,7 +22,14 @@ import {
   VCButton,
 } from "@/components";
 import { useVideoConverter, useVideoState } from "@/hooks";
-import { LockKeyhole, LockKeyholeOpen } from "lucide-react";
+import {
+  ArrowBigDownDashIcon,
+  FolderArchiveIcon,
+  LockKeyhole,
+  LockKeyholeOpen,
+  RefreshCcwIcon,
+} from "lucide-react";
+import { FileCard } from "@/components/FileCard";
 
 export default function Home() {
   const [fromFormat, setFromFormat] = useState("");
@@ -60,7 +67,8 @@ export default function Home() {
         className="
           flex items-center justify-center
           mb-8
-          gap-6
+          text-gray-700
+          gap-2
         "
       >
         <div
@@ -70,11 +78,12 @@ export default function Home() {
           "
         >
           <label htmlFor="from-format">{SOURCE_FORMAT}</label>
-
           <select
             id="from-format"
             value={fromFormat}
-            onChange={(e) => setFromFormat(e.target.value)}
+            onChange={(e) => {
+              setFromFormat(e.target.value);
+            }}
             className="border rounded-xl px-5 py-3 text-lg shadow-sm"
             disabled={videos.length > 0}
           >
@@ -89,11 +98,12 @@ export default function Home() {
         <div
           aria-hidden="true"
           className="
-            text-3xl font-bold
+            text-2xl font-bold
           "
         >
           →
         </div>
+
         <div
           className="
             flex flex-col
@@ -132,7 +142,6 @@ export default function Home() {
           )}
         </span>
       </div>
-
       <div
         className="
           w-full
@@ -144,7 +153,6 @@ export default function Home() {
             onFileUpload={handleFilesUpload}
           />
         )}
-
         {!!videos.length && (
           <div
             className="
@@ -155,18 +163,23 @@ export default function Home() {
               shadow-xl
             "
           >
-            <FileOverview videos={videos} />
+            <div
+              className="
+                hidden md:block
+              "
+            >
+              <FileOverview videos={videos} />
+            </div>
 
             <div
               role="toolbar"
               aria-label={FILE_ACTIONS}
               className="
-                flex flex-wrap items-center
+                flex flex-wrap items-center justify-between
                 min-w-0
                 p-5 mb-6
                 bg-slate-50
                 rounded-2xl border
-                gap-2
               "
             >
               <VCButton
@@ -177,17 +190,19 @@ export default function Home() {
                 onClickHandler={handleConvert}
                 label={CONVERT_SELECTED_BUTTON}
                 isDisabled={loading}
+                icon={<RefreshCcwIcon />}
               />
 
               <VCButton
                 className="
-                  text-black
-                  bg-white hover:bg-slate-50
-                  border border-slate-300
+                  hidden md:inline-flex
+                  text-white
+                  bg-blue-600 hover:bg-blue-700
                 "
                 onClickHandler={handleDownloadSelected}
                 label={DOWNLOAD_SELECTED_BUTTON}
                 isDisabled={loading}
+                icon={<ArrowBigDownDashIcon />}
               />
 
               <VCButton
@@ -198,26 +213,29 @@ export default function Home() {
                 onClickHandler={handleDownloadZip}
                 label={DOWNLOAD_ZIP_BUTTON}
                 isDisabled={loading}
+                icon={<FolderArchiveIcon />}
               />
-
-              {/* <div
-                aria-live="polite"
-                className="
-                  px-4 py-2
-                  text-blue-700 font-medium
-                  bg-blue-50
-                  rounded-xl
-                "
-              >
-                Selected Size: {totalSelectedSizeMB.toFixed(0)} MB
-              </div> */}
             </div>
             <div
               className="
+                hidden md:block
                 w-full
               "
             >
               <FileTable
+                videos={videos}
+                onSelectionChange={handleFileSelectionChange}
+                onSelectAll={handleSelectAll}
+                fromFormat={fromFormat}
+                toFormat={toFormat}
+              />
+            </div>
+            <div
+              className="
+                block md:hidden
+              "
+            >
+              <FileCard
                 videos={videos}
                 onSelectionChange={handleFileSelectionChange}
                 onSelectAll={handleSelectAll}

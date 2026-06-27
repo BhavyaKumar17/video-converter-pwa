@@ -1,21 +1,28 @@
+"use client";
+
 import React, { useState } from "react";
 import { acceptMap, VCUploadAreaProps } from "@/types";
 import { DRAG_AND_DROP_FILES, OR_CLICK_TO_BROWSE } from "@/constants";
+import { logToTerminal } from "@/app/actions";
 
 export const UploadArea = ({ onFileUpload, fromFormat }: VCUploadAreaProps) => {
   const [isDragging, setIsDragging] = useState(false);
 
   function processFiles(files: File[]) {
+   try{ 
     const newVideos = files.map((file) => ({
-      id: crypto.randomUUID(),
+      id: generateId(),
       file,
       selected: true,
       progress: 0,
       status: "waiting" as const,
     }));
-
-    onFileUpload(newVideos);
+    onFileUpload(newVideos);}catch(err){alert(err)}
   }
+
+function generateId() {
+  return `${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
+}
 
   function handleFileUpload(e: React.ChangeEvent<HTMLInputElement>): void {
     processFiles(Array.from(e.target.files || []));
@@ -130,22 +137,21 @@ export const UploadArea = ({ onFileUpload, fromFormat }: VCUploadAreaProps) => {
           {fromFormat && <span> ({fromFormat.toUpperCase()} files only)</span>}
         </p>
       </label>
-
       <input
-        id="file-upload"
-        aria-describedby="upload-help"
-        type="file"
-        accept={
+        type="file" onChange={handleFileUpload}
+  accept={
           fromFormat
             ? acceptMap[fromFormat as keyof typeof acceptMap]
             : undefined
         }
+         id="file-upload"
+        aria-describedby="upload-help"
         multiple
         className="
           sr-only
         "
-        onChange={handleFileUpload}
-      />
+        /
+      >
     </>
   );
 };

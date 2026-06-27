@@ -1,71 +1,77 @@
-import React from 'react';
-import { VideoItem } from '@/types';
+"use client";
+
+import React from "react";
+import { VideoItem } from "@/types";
 
 export const FileOverview = ({ videos }: { videos: VideoItem[] }) => {
-    return <div
-        className="
+  return (
+    <div
+      className="
         grid grid-cols-3
-        my-8
+        mb-8
         gap-4
       "
     >
+      <div
+        className="
+          p-5
+          bg-white
+          rounded-2xl
+          shadow
+        "
+      >
         <div
-            className="
-            p-5
-            bg-white
-            rounded-2xl
-            shadow
+          className="
+            text-2xl font-bold
           "
         >
-            <div
-                className="
-                text-2xl font-bold
-              "
-            >{videos.length}</div>
-            <div>Files</div>
+          {videos.length}
         </div>
+        <div>Files</div>
+      </div>
+      <div
+        className="
+          p-4
+          rounded-xl
+          shadow
+        "
+      >
         <div
-            className="
-            p-4
-            rounded-xl
-            shadow
+          className="
+            text-2xl font-bold
           "
         >
-            <div
-                className="
-                text-2xl font-bold
-              "
-            >
-                {videos.filter((v) => v.selected).length}
-            </div>
-            <div>Selected</div>
+          {videos.filter((v) => v.selected).length}
+        </div>
+        <div>Selected</div>
+      </div>
+
+      <div
+        className="
+          p-4
+          rounded-xl
+          shadow
+        "
+      >
+        <div
+          className="
+            text-2xl font-bold
+          "
+        >
+          {videos.filter((v) => v.status === "completed").length}
         </div>
 
-        <div
-            className="
-            p-4
-            rounded-xl
-            shadow
+        <span
+          className="
+            px-3 py-1
+            text-green-700 text-sm
+            bg-green-100
+            rounded-full
           "
         >
-            <div
-                className="
-                text-2xl font-bold
-              "
-            >
-                {videos.filter((v) => v.status === "completed").length}
-            </div>
-
-            <span
-                className="
-                px-3 py-1
-                text-green-700 text-sm
-                bg-green-100
-                rounded-full
-              "
-            >
-                Completed
-            </span>
-        </div>
+          Completed
+        </span>
+      </div>
     </div>
-}
+  );
+};

@@ -36,6 +36,7 @@ export const Header = () => {
         className="
           flex justify-center
           mt-6
+          text-gray-700
           gap-4
         "
       >

@@ -10,8 +10,8 @@ export const MEDIA_CONVERTER_DESCRIPTION =
   "Convert files directly in your browser. No uploads. No limits.";
 export const SOURCE_FORMAT = "Source Format";
 export const TARGET_FORMAT = "Target Format";
-export const CHOOSE_SOURCE = "Choose Source";
-export const CHOOSE_TARGET = "Choose Target";
+export const CHOOSE_SOURCE = "Choose";
+export const CHOOSE_TARGET = "Choose";
 export const FORMATS_LOCKED = "Formats locked";
 export const FORMATS_UNLOCKED = "Formats not locked";
 export const FILE_ACTIONS = "File actions";
